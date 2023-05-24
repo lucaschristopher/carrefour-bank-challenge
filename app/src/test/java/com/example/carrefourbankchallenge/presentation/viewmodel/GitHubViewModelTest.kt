@@ -5,7 +5,7 @@ import androidx.paging.PagingData
 import app.cash.turbine.test
 import com.example.carrefourbankchallenge.data.datasource.remote.model.toDomainModel
 import com.example.carrefourbankchallenge.data.util.userResponseMock
-import com.example.carrefourbankchallenge.domain.repository.GitHubRepository
+import com.example.carrefourbankchallenge.domain.usecase.GetGitHubUsersUseCase
 import io.mockk.coEvery
 import io.mockk.mockk
 import kotlinx.coroutines.Dispatchers
@@ -25,7 +25,7 @@ class GitHubViewModelTest {
 
     private val testDispatcher = UnconfinedTestDispatcher()
 
-    private val repository: GitHubRepository = mockk(relaxed = true)
+    private val useCase: GetGitHubUsersUseCase = mockk(relaxed = true)
 
     @Before
     fun setup() {
@@ -38,12 +38,12 @@ class GitHubViewModelTest {
     }
 
     @Test
-    fun `repository should returns not null content when viewModel getUsers is called`() =
+    fun `useCase should returns not null content when viewModel getUsers is called`() =
         runTest(testDispatcher) {
-            val viewModel = GitHubViewModel(repository)
+            val viewModel = GitHubViewModel(useCase)
             val dataFlow = flowOf(PagingData.from(listOf(userResponseMock.toDomainModel())))
 
-            coEvery { repository.getUsers() } answers { dataFlow }
+            coEvery { useCase.invoke() } answers { dataFlow }
 
             viewModel.getUsers().test {
                 Assert.assertNotNull(awaitItem())

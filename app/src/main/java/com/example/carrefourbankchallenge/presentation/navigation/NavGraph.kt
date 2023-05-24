@@ -2,16 +2,22 @@ package com.example.carrefourbankchallenge.presentation.navigation
 
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.remember
+import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import androidx.navigation.NavHostController
 import androidx.navigation.NavType
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.navArgument
+import androidx.paging.compose.collectAsLazyPagingItems
 import com.example.carrefourbankchallenge.core.constants.EMPTY_STRING
 import com.example.carrefourbankchallenge.core.constants.USER_ARG
 import com.example.carrefourbankchallenge.presentation.ui.fragments.detail.UserDetailFragment
 import com.example.carrefourbankchallenge.presentation.ui.fragments.home.HomeFragment
 import com.example.carrefourbankchallenge.presentation.ui.fragments.search.SearchFragment
+import com.example.carrefourbankchallenge.presentation.viewmodel.GitHubViewModel
+import com.example.carrefourbankchallenge.presentation.viewmodel.SearchViewModel
+import com.example.carrefourbankchallenge.presentation.viewmodel.UserViewModel
+import org.koin.androidx.compose.koinViewModel
 
 @Composable
 fun NavGraph(navHostController: NavHostController) {

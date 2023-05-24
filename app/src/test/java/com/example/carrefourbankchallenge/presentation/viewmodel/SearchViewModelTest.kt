@@ -1,18 +1,15 @@
 package com.example.carrefourbankchallenge.presentation.viewmodel
 
 import androidx.arch.core.executor.testing.InstantTaskExecutorRule
-import androidx.paging.PagingData
 import app.cash.turbine.test
 import com.example.carrefourbankchallenge.data.datasource.remote.model.toDomainModel
 import com.example.carrefourbankchallenge.data.util.userResponseMock
-import com.example.carrefourbankchallenge.domain.model.UserModel
 import com.example.carrefourbankchallenge.domain.model.toUiModel
-import com.example.carrefourbankchallenge.domain.repository.GitHubRepository
+import com.example.carrefourbankchallenge.domain.usecase.SearchGitHubUserUseCase
 import com.example.carrefourbankchallenge.presentation.model.Result
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.delay
-import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.flow
 import kotlinx.coroutines.test.*
 import org.junit.After
@@ -30,7 +27,7 @@ class SearchViewModelTest {
 
     private val testDispatcher = UnconfinedTestDispatcher()
 
-    private fun setupViewModel(repository: GitHubRepository) = SearchViewModel(repository)
+    private fun setupViewModel(useCase: SearchGitHubUserUseCase) = SearchViewModel(useCase)
 
     @Before
     fun setup() {
@@ -43,10 +40,10 @@ class SearchViewModelTest {
     }
 
     @Test
-    fun `should retun sucess when repository retuns sucess in search`() = runTest {
+    fun `should return success when useCase returns success in search`() = runTest {
         // Given
         val username = "mojombo"
-        val viewModel = setupViewModel(fakeSuccessRepository)
+        val viewModel = setupViewModel(fakeSuccessUseCase)
 
         // When
         viewModel.searchUser(username)
@@ -67,10 +64,10 @@ class SearchViewModelTest {
     }
 
     @Test
-    fun `should retun error when repository throw a expection`() = runTest {
+    fun `should return error when useCase throw a exception`() = runTest {
         // Given
         val username = "890uaksakns"
-        val viewModel = setupViewModel(fakeErrorRepository)
+        val viewModel = setupViewModel(fakeErrorUseCase)
 
         // When
         viewModel.searchUser(username)
@@ -85,35 +82,15 @@ class SearchViewModelTest {
     }
 }
 
-private val fakeSuccessRepository = object : GitHubRepository {
-    override fun getUsers(): Flow<PagingData<UserModel>> {
-        TODO("Not yet implemented")
-    }
-
-    override suspend fun getUserDetails(username: String): Flow<UserModel> {
-        TODO("Not yet implemented")
-    }
-
-    override suspend fun searchUser(username: String): Flow<UserModel> {
-        return flow {
-            delay(DELAY_TIME)
-            emit(userResponseMock.toDomainModel())
-        }
+private val fakeSuccessUseCase = SearchGitHubUserUseCase {
+    flow {
+        delay(DELAY_TIME)
+        emit(userResponseMock.toDomainModel())
     }
 }
 
-private val fakeErrorRepository = object : GitHubRepository {
-    override fun getUsers(): Flow<PagingData<UserModel>> {
-        TODO("Not yet implemented")
-    }
-
-    override suspend fun getUserDetails(username: String): Flow<UserModel> {
-        TODO("Not yet implemented")
-    }
-
-    override suspend fun searchUser(username: String): Flow<UserModel> {
-        return flow { throw RuntimeException(CODE_MESSAGE) }
-    }
+private val fakeErrorUseCase = SearchGitHubUserUseCase {
+    flow { throw RuntimeException(CODE_MESSAGE) }
 }
 
 private const val DELAY_TIME: Long = 1000

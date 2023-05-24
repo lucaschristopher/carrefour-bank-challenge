@@ -1,6 +1,5 @@
 package com.example.carrefourbankchallenge.data.repository
 
-
 import androidx.paging.PagingData
 import androidx.paging.map
 import com.example.carrefourbankchallenge.data.datasource.remote.GitHubRemoteDataSource

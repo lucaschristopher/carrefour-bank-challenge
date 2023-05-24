@@ -12,9 +12,12 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.stringResource
+import androidx.paging.LoadState
 import androidx.paging.compose.collectAsLazyPagingItems
 import com.example.carrefourbankchallenge.R
 import com.example.carrefourbankchallenge.presentation.ui.components.AppTopBar
+import com.example.carrefourbankchallenge.presentation.ui.components.ErrorDialog
+import com.example.carrefourbankchallenge.presentation.ui.components.LoadingComponent
 import com.example.carrefourbankchallenge.presentation.ui.theme.DarkBlue
 import com.example.carrefourbankchallenge.presentation.ui.theme.WhiteAccent
 import com.example.carrefourbankchallenge.presentation.viewmodel.GitHubViewModel
@@ -28,7 +31,7 @@ fun HomeFragment(
 ) {
 
     val viewModel = koinViewModel<GitHubViewModel>()
-    val pagingData = viewModel.getUsers().collectAsLazyPagingItems()
+    val lazyPagingItems = viewModel.getUsers().collectAsLazyPagingItems()
 
     Scaffold(
         modifier = modifier
@@ -42,9 +45,23 @@ fun HomeFragment(
             )
         },
         content = {
+            lazyPagingItems.apply {
+                when (loadState.refresh) {
+                    is LoadState.Loading -> LoadingComponent()
+                    is LoadState.Error -> {
+                        ErrorDialog(
+                            modifier = modifier,
+                            errorMessage = (loadState.refresh as LoadState.Error).error.message,
+                            onClick = { retry() }
+                        )
+                    }
+                    else -> {}
+                }
+            }
+
             HomeContent(
                 modifier = modifier.padding(it),
-                pagingData = pagingData,
+                data = lazyPagingItems.itemSnapshotList.items,
                 action = actionOpenUserDetails
             )
         },

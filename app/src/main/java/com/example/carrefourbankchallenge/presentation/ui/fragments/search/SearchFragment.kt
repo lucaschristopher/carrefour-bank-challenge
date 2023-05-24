@@ -18,20 +18,15 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.focus.FocusRequester
 import androidx.compose.ui.focus.focusRequester
 import androidx.compose.ui.platform.LocalFocusManager
-import androidx.compose.ui.platform.LocalSoftwareKeyboardController
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.input.ImeAction
 import androidx.compose.ui.text.input.KeyboardType
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import com.example.carrefourbankchallenge.R
 import com.example.carrefourbankchallenge.core.constants.EMPTY_STRING
-import com.example.carrefourbankchallenge.presentation.model.Result
 import com.example.carrefourbankchallenge.presentation.ui.components.AppTopBar
-import com.example.carrefourbankchallenge.presentation.ui.components.LoadingComponent
-import com.example.carrefourbankchallenge.presentation.ui.fragments.home.widgets.UserItem
 import com.example.carrefourbankchallenge.presentation.ui.theme.WhiteAccent
 import com.example.carrefourbankchallenge.presentation.ui.theme.dp16
-import com.example.carrefourbankchallenge.presentation.ui.theme.dp4
 import com.example.carrefourbankchallenge.presentation.viewmodel.SearchViewModel
 import org.koin.androidx.compose.koinViewModel
 
@@ -43,6 +38,7 @@ fun SearchFragment(
 ) {
 
     val viewModel = koinViewModel<SearchViewModel>()
+    val state = viewModel.searchStateFlow.collectAsStateWithLifecycle().value
 
     val focusRequester = remember { FocusRequester() }
     val textState = remember { mutableStateOf(EMPTY_STRING) }
@@ -97,26 +93,11 @@ fun SearchFragment(
                     ),
                 )
 
-                when (val response =
-                    viewModel.searchStateFlow.collectAsStateWithLifecycle().value) {
-                    is Result.Loading -> LoadingComponent()
-                    is Result.Error -> {
-                        Box(modifier = modifier
-                            .fillMaxSize()
-                            .padding(top = dp4)
-                        ) {
-                            Text(stringResource(id = R.string.error_user_not_found))
-                        }
-                    }
-                    is Result.Success -> {
-                        UserItem(
-                            modifier = modifier.padding(top = dp4),
-                            data = response.data,
-                            action = actionOpenUserDetails
-                        )
-                    }
-                    else -> Unit
-                }
+                SearchContent(
+                    modifier = modifier,
+                    state = state,
+                    action = actionOpenUserDetails
+                )
             }
         }
     )

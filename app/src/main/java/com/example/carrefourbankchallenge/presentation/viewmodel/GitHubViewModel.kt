@@ -6,17 +6,17 @@ import androidx.paging.PagingData
 import androidx.paging.cachedIn
 import androidx.paging.map
 import com.example.carrefourbankchallenge.domain.model.toUiModel
-import com.example.carrefourbankchallenge.domain.repository.GitHubRepository
+import com.example.carrefourbankchallenge.domain.usecase.GetGitHubUsersUseCase
 import com.example.carrefourbankchallenge.presentation.model.UserUiModel
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.map
 
 class GitHubViewModel(
-    private val repository: GitHubRepository
+    private val useCase: GetGitHubUsersUseCase
 ) : ViewModel() {
 
     fun getUsers(): Flow<PagingData<UserUiModel>> {
-        return repository.getUsers().map { pagingData ->
+        return useCase.invoke().map { pagingData ->
             pagingData.map { it.toUiModel() }
         }.cachedIn(viewModelScope)
     }

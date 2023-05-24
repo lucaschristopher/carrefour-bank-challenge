@@ -9,15 +9,15 @@ import org.koin.dsl.module
 
 val viewModelModule = module {
     viewModel {
-        GitHubViewModel(repository = get())
+        GitHubViewModel(useCase = get())
     }
 
     viewModel {
-        UserViewModel(repository = get())
+        UserViewModel(useCase = get())
     }
 
     viewModel {
-        SearchViewModel(repository = get())
+        SearchViewModel(useCase = get())
     }
 }
 
