@@ -46,7 +46,12 @@ Primeiro, faça o download do projeto executando o comando
 git clone https://github.com/lucaschristopher/carrefour-bank-challenge.git
 ```
 
-Em seguida, abra sua IDEA preferida (de preferência, o Android Studio), importe o projeto, carregue as dependências e execute o projeto.
+Em seguida, abra sua IDEA preferida (de preferência, o Android Studio), e
+
+1. Importe o projeto;
+2. No arquivo **"app/build.gradle"**, adicione seu GitHub Token no campo **GITHUB_TOKEN** e carregue as dependências.
+3. Execute o projeto.
+
 Para executar os testes unitários, dentro da pasta do projeto, abra o terminal e execute o comando
 
 ```
