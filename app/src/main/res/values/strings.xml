@@ -1,0 +1,31 @@
+<resources>
+    <string name="app_name">Carrefour Bank Challenge</string>
+
+    <string name="title_home">GitHub Users</string>
+    <string name="title_detail">Details of "%s"</string>
+    <string name="title_search">Search user"</string>
+    <string name="title_repo">Repositories:"</string>
+    <string name="id_repo">ID: #%d</string>
+    <string name="name_owner_repo">Name: %s</string>
+    <string name="email_owner_repo">E-mail: %s</string>
+    <string name="forks_repo">Forks: %s</string>
+    <string name="location_owner_repo">Location: %s</string>
+    <string name="company_owner_repo">Company: %s</string>
+
+    <!-- Description -->
+    <string name="description_avatar_image">avatar image</string>
+    <string name="description_star_icon">star icon</string>
+    <string name="description_fork_icon">fork icon</string>
+    <string name="description_back_button">back button</string>
+    <string name="description_search_button">search button</string>
+
+    <!-- Error -->
+    <string name="error_dialog_default_description">Tivemos um problema ao buscar os usuários. Por favor, tente novamente.</string>
+    <string name="error_dialog_default_description_with_code">Tivemos um problema ao buscar os usuários com a seguinte mensagem: %s. \n\nPor favor, tente novamente.</string>
+    <string name="error_dialog_title">Ops! Ocorreu um erro</string>
+    <string name="error_user_not_found">Ops! Não encontramos nada =(</string>
+
+    <!-- Default -->
+    <string name="label_reload">Recarregar</string>
+    <string name="label_search_field">Search user</string>
+</resources>

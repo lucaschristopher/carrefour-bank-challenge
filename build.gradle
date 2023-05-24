@@ -1,0 +1,43 @@
+buildscript {
+    ext {
+        // Android
+        ktx_version = "1.10.1"
+        compose_ui_version = "1.4.3"
+        material_version = "1.4.3"
+        compose_activity_version = "1.7.1"
+        lifecycle_runtime_ktx_version = "2.6.1"
+        constraint_layout_version = "1.0.1"
+        nav_version = "2.5.3"
+
+        // Paging
+        paging_version = "3.1.1"
+        paging_compose_version = "1.0.0-alpha19"
+
+        // Koin
+        koin_version = "3.4.0"
+
+        // Network
+        retrofit_version = "2.9.0"
+        okhttp_version = "4.10.0"
+
+        // Coil
+        coil_version = "2.3.0"
+
+        // Test
+        coroutines_version = "1.7.1"
+        kotlin_test_version = "1.7.21"
+        turbine_version = "0.11.0"
+        arch_core_version = "2.2.0"
+        junit_version = "4.13.2"
+        junit_ui_version = "1.1.5"
+        mockk_version = "1.13.3"
+        espresso_version = "3.5.1"
+
+
+    }
+}// Top-level build file where you can add configuration options common to all sub-projects/modules.
+plugins {
+    id 'com.android.application' version '7.4.1' apply false
+    id 'com.android.library' version '7.4.1' apply false
+    id 'org.jetbrains.kotlin.android' version '1.7.0' apply false
+}
