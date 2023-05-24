@@ -14,7 +14,7 @@ if (getGradle().getStartParameter().getTaskRequests().toString().containsIgnoreC
     BASE_URL = BASE_URL_PROD
 }
 
-def GITHUB_TOKEN = "\"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\""
+def GITHUB_TOKEN = "TYPE_YOUR_GITHUB_TOKEN"
 
 android {
     namespace 'com.example.carrefourbankchallenge'
