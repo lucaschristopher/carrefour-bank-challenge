@@ -57,6 +57,14 @@ Para executar os testes unitários, dentro da pasta do projeto, abra o terminal 
 ```
 ./gradlew testDebugUnitTest
 ```
+Para executar o app via linha de comando (terminal), após realizar as etapas anteriores, execute os comandos
+
+```
+./gradlew clean
+./gradlew assembleDebug
+```
+Isso gerará um .APK de debug localizado na pasta **app/build/outputs**. 
+
 Esta foi a abordagem adotada na solução. Desde já, grato.
 
 **Autor: Lucas Christopher.**
